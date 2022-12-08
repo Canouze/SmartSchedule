@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package SmartSchedule;
+
+service EmployeeService{
+  rpc getEmployees (EmployeeRequest) returns (stream EmployeeResponse) {}
+}
+
+message EmployeeRequest{
+  string minDurationDays = 1;
+  string minLevel = 2;
+}
+
+message EmployeeResponse{
+  string employeeName = 1;
+  string employeeID = 2;
+  string employeeStartDate = 3;
+  string employeeLevel = 4;
+}
