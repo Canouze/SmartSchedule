@@ -1,4 +1,3 @@
-var readlineSync = require('readline-sync')
 var express = require('express');
 var router = express.Router();
 var grpc = require('@grpc/grpc-js');
@@ -24,62 +23,27 @@ router.get('/', function(req, res, next) {
 
 router.get('/employee', function(req, res, next) {
   try{
-    employeeRunner();
-    res.render('employee', {
-    title: 'Employees',
-    employeeName:'hhhh',
-    employeeID: '',
-    employeeStartDate: '',
-    employeeLevel: ''
-  });
-  }
+    displaylist=[];
+    var initdays = "1";
+    var initlevel = "1";
+    client.getEmployees({minDurationDays: initdays, minLevel: initlevel}, function (error, response){
+      try{
+        res.render('employee', {
+          title: 'Employees',
+          employeeName: response.employeeName,
+          employeeID: response.employeeID,
+          employeeStartDate: response.employeeStartDate,
+          employeeLevel: response.employeeLevel
+        })
+      }
+      catch(e){
+        console.log(error);
+      }
+  })
+}
   catch(error){
     console.log(error);
   }
 });
 
 module.exports = router;
-
-
-function employeeRunner(){
-  displaylist=[];
-  var initdays = "5000";
-  var initlevel = "1";
-  var temp_employee = {
-    name: "",
-    employeeID: "",
-    startDate: "",
-    level: ""
-  }
-  client.getEmployees({minDurationDays: initdays, minLevel: initlevel}, function (error, response){
-    call.on('data', function(request){
-      temp_employee.name = request.employeeName;
-      temp_employee.employeeID = request.employeeID;
-      temp_employee.startDate = request.employeeStartDate;
-      temp_employee.level = request.employeeLevel;
-      displaylist.push(temp_employee);
-    })
-    call.on('end', function(){
-      res.render('employee', {
-        title: 'Employees',
-        employeeName: displaylist[i].name,
-        employeeID: displaylist[i].employeeID,
-        employeestartDate: displaylist[i].startDate,
-        employeeLevel: displaylist[i].level,
-      });
-    })
-    call.on('error', function(e) {
-      console.log("An error occurred")
-    })
-  })
-}
-
-//this function updates price slider value
-function filterone(){
-	daysfilval.innerHTML=daysfil.value;
-}
-
-//this function updates calorie slider value
-function filtertwo(){
-	levelfilval.innerHTML=levelfil.value;
-}
