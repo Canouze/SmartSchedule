@@ -27,6 +27,7 @@ router.get('/employee', function(req, res, next) {
     var initdays = "1";
     var initlevel = "1";
     client.getEmployees({minDurationDays: initdays, minLevel: initlevel}, function (error, response){
+      console.log(response.employeeLevel);
       try{
         res.render('employee', {
           title: 'Employees',

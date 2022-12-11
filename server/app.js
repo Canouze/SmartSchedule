@@ -6,25 +6,55 @@ var packageDefinition = protoLoader.loadSync(
 )
 var employee_proto = grpc.loadPackageDefinition(packageDefinition).SmartSchedule;
 
-var template_employee = {
-  employeeName: "John Doe",
-  employeeID: "0138",
-  employeeStartDate: "23/02/2015",
-  employeeLevel: "3"
-}
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "smart_schedule_db"
+});
 
 let employee_list = [];
 
-employee_list.push(template_employee);
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected to database!");
+  con.query("SELECT * FROM employees", function (err, result, fields) {
+    if (err) throw err;
+    for(let i=0; i<result.length; i++){
+      temp_employee = {
+        employeeID: result[i].employee_id,
+        employeeName: result[i].employee_name,
+        employeeStartDate: result[i].employee_startdate,
+        employeeLevel: result[i].employee_level
+      };
+      employee_list.push(temp_employee);
+    }
+  });
+});
+
+let displaylist = [];
 
 
 function getEmployees(call, callback){
   try{
+    var fil1 = parseInt(call.request.minDurationDays);
+    var fil2 = parseInt(call.request.minLevel);
+    var currDate = new Date();
+    for(let i=0; i<employee_list.length; i++){
+      var date2 = new Date(employee_list[i].employeeStartDate);
+      var duration = (currDate.getTime()-date2.getTime())/86400000;
+      console.log(parseInt(duration));
+      if(fil1<=duration&&fil2<=employee_list[i].employeeLevel){
+        displaylist.push(employee_list[i]);
+      }
+    }
     callback(null, {
-      employeeName: employee_list[0].employeeName,
-      employeeID: employee_list[0].employeeID,
-      employeeStartDate: employee_list[0].employeeStartDate,
-      employeeLevel: employee_list[0].employeeeLevel
+      employeeName: displaylist[0].employeeName,
+      employeeID: displaylist[0].employeeID,
+      employeeStartDate: displaylist[0].employeeStartDate,
+      employeeLevel: displaylist[0].employeeLevel
     })
   }
   catch(e){
