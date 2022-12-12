@@ -11,11 +11,16 @@ message EmployeeRequest{
   string minLevel = 2;
 }
 
+
 message EmployeeResponse{
+  repeated EmployeeDetails employee = 1;
+  int32 total = 2;
+  int32 provided = 3;
+}
 
-    string employeeName = 1;
-    string employeeID = 2;
-    string employeeStartDate = 3;
-    string employeeLevel = 4;
-
+message EmployeeDetails{
+  string employeeID = 1;
+  string employeeName = 2;
+  string employeeStartDate = 3;
+  string employeeLevel = 4;
 }

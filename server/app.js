@@ -1,9 +1,7 @@
 var grpc = require("@grpc/grpc-js")
 var protoLoader = require("@grpc/proto-loader")
 var PROTO_PATH = __dirname + "/protos/employee.proto"
-var packageDefinition = protoLoader.loadSync(
-  PROTO_PATH
-)
+var packageDefinition = protoLoader.loadSync(PROTO_PATH)
 var employee_proto = grpc.loadPackageDefinition(packageDefinition).SmartSchedule;
 
 var mysql = require('mysql');
@@ -36,26 +34,34 @@ con.connect(function(err) {
 
 let displaylist = [];
 
+let placeholder = {
+  employeeID: "No data",
+  emplyeeName: "No data",
+  emplyeeStartDate: "No data",
+  emplyeeName: "No data",
+}
+
 
 function getEmployees(call, callback){
   try{
+    displaylist=[];
     var fil1 = parseInt(call.request.minDurationDays);
     var fil2 = parseInt(call.request.minLevel);
     var currDate = new Date();
     for(let i=0; i<employee_list.length; i++){
       var date2 = new Date(employee_list[i].employeeStartDate);
       var duration = (currDate.getTime()-date2.getTime())/86400000;
-      console.log(parseInt(duration));
       if(fil1<=duration&&fil2<=employee_list[i].employeeLevel){
         displaylist.push(employee_list[i]);
       }
     }
-    callback(null, {
-      employeeName: displaylist[0].employeeName,
-      employeeID: displaylist[0].employeeID,
-      employeeStartDate: displaylist[0].employeeStartDate,
-      employeeLevel: displaylist[0].employeeLevel
-    })
+    if(displaylist.length==0){
+      displaylist.push(placeholder);
+      callback(null, {employee: displaylist, total: employee_list.length, provided: 0})
+    }
+    else{
+      callback(null, {employee: displaylist, total: employee_list.length, provided: displaylist.length})
+    }
   }
   catch(e){
     callback(null, {
