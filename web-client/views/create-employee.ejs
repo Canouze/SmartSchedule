@@ -40,7 +40,7 @@
   <div class="container-fluid">
     <div id="inputdiv">
       <div class="row">
-        <form action="/employee" method="get">
+        <form action="/create-employee" method="get">
           <div class="col-lg-2 filcontainer1" style="float:left">
             <label for="id">Employee ID:</label><br>
             <input type="text" id="id" name="id"><br>
@@ -58,58 +58,20 @@
             <input type="level" id="level" name="level">
           </div>
           <div class="col-lg-2 filcontainer3" style="float:left">
-            <button type="submit" action="/employee" method="get">Create Employee</button><br>
+            <button type="submit" action="/create-employee" method="get">Create Employee</button><br>
           </div>
         </form>
       </div>
     </div>
-    <div id="filtdiv">
-      <div class="row">
-        <form action="/employee" method="get">
-          <div class="col-lg-4 filcontainer1" style="float:left">
-            <h4 class="shoph4">Days with Company</h4>
-            <input type="range" name="daysValue" oninput="valueReaderDays(this.value)" min="0" max="5000" value="0" class="slider" id="daysfil">
-            <p>Minimum No. Days Employed: <span id="daysfilval">0</span></p>
-          </div>
-          <script>
-            function valueReaderDays(value) {
-              document.getElementById("daysfilval").innerHTML = value;
-            }
-          </script>
-          <div class="col-lg-4 filcontainer1" style="float:left">
-            <h4 class="shoph4">Employee Level</h4>
-            <input type="range" name="levelValue" oninput="valueReaderLevel(this.value)" min="0" max="5" value="0" class="slider" id="levelfil">
-            <p>Minimum Employee Level: <span id="levelfilval">0</span></p>
-          </div>
-          <script>
-            function valueReaderLevel(value) {
-              document.getElementById("levelfilval").innerHTML = value;
-            }
-          </script>
-          <div class="col-lg-4 filcontainer3" style="float:left">
-            <b id="shown"><%= shown %></b><br>
-            <button type="submit" action="/employee" method="get">Apply Filters</button><br>
-            <b id="filtout"><%= filtout %></b>
-          </div>
-        </form>
-      </div>
+    <div>
+      <p>
+        <% if (result!=null) { %>
+          <%= result %>
+        <% }
+        else { %>
+        <% } %>
+      </p>
     </div>
-    <table id='employee_table' width='100%' border='1' style='border-collapse: collapse;'>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Start Date</th>
-        <th>Level</th>
-      </tr>
-      <% for (var i = 0; i < result.length; i++) { %>
-       <tr>
-         <td><%= result[i].employeeID %></td>
-         <td><%= result[i].employeeName %></td>
-         <td><%= result[i].employeeStartDate %></td>
-         <td><%= result[i].employeeLevel %></td>
-       </tr>
-      <% } %>
-    </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
 </html>

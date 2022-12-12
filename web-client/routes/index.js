@@ -26,17 +26,14 @@ router.get('/employee', function(req, res, next) {
   try{
     displaylist=[];
     var initdays = req.query.daysValue || 0;
-    console.log(initdays);
     var initlevel = req.query.levelValue || 0;
-    console.log(initlevel);
     client.getEmployees({minDurationDays: initdays, minLevel: initlevel}, function (error, response){
       try{
-        console.log(response.employee);
         res.render('employee', {
           title: 'Employees',
           result: response.employee,
           shown: response.provided,
-          filtout: response.total-response.total,
+          filtout: response.total-response.provided,
         })
       }
       catch(e){
@@ -46,6 +43,42 @@ router.get('/employee', function(req, res, next) {
   }
   catch(error){
     console.log(error);
+  }
+});
+
+router.get('/create-employee', function(req, res, next) {
+  if(req.query.id!=undefined)
+    try{
+      console.log(req.query.id);
+      var initid = req.query.id;
+      var initname = req.query.name;
+      var initstartdate = req.query.startdate;
+      var initlevel = req.query.level;
+      client.giveEmployee({employee: {employeeID: initid, employeeName: initname, employeeStartDate: initstartdate, employeeLevel: initlevel}}, function (error, response){
+        try{
+          res.render('create-employee', {
+            title: 'Create Employee',
+            result: response.employeeResult
+          })
+        }
+        catch(e){
+          console.log(e);
+        }
+      })
+    }
+    catch(e){
+      console.log(e);
+    }
+  else{
+    try{
+      res.render('create-employee', {
+        title: 'Create Employee',
+        result: 'Please enter details...'
+      })
+    }
+    catch(e){
+      console.log(e);
+    }
   }
 });
 

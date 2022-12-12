@@ -4,6 +4,7 @@ package SmartSchedule;
 
 service EmployeeService{
   rpc getEmployees (EmployeeRequest) returns (EmployeeResponse) {}
+  rpc giveEmployee (EmployeeInput) returns (EmployeeCreated) {}
 }
 
 message EmployeeRequest{
@@ -23,4 +24,12 @@ message EmployeeDetails{
   string employeeName = 2;
   string employeeStartDate = 3;
   string employeeLevel = 4;
+}
+
+message EmployeeInput{
+  EmployeeDetails employee = 1;
+}
+
+message EmployeeCreated{
+  string employeeResult = 1;
 }
