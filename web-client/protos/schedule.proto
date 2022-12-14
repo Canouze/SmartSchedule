@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package SmartScheduleMain;
+
+service ScheduleService{
+  rpc getSchedule (ScheduleRequest) returns (ScheduleResponse) {}
+  rpc giveSchedule (ScheduleInput) returns (ScheduleResponse) {}
+}
+
+message ScheduleRequest{
+}
+
+message ScheduleResponse{
+  repeated ScheduleDetails schedule = 1;
+}
+
+message ScheduleDetails{
+  int32 scheduleID = 1;
+  string scheduleDay = 2;
+  string employeeName = 3;
+  string projectName = 4;
+}
+
+message ScheduleInput{
+  string scheduleDay = 1;
+  string scheduleEmployee = 2;
+  string scheduleProject = 3;
+}

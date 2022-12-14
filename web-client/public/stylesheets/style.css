@@ -1,3 +1,70 @@
 .toprowheader{
   text-align: center;
 }
+
+.shoph4{
+  text-align: center;
+}
+
+.slider
+{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: 0;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+.slider::-webkit-slider-thumb
+{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  background: url('/images/slider_icon.png');
+  cursor: pointer;
+}
+.slider::-moz-range-thumb
+{
+  width: 22px;
+  height: 22px;
+  border: 0;
+  background: url('/images/slider_icon.png');
+  cursor: pointer;
+}
+
+.filcontainer1{
+  text-align: center;
+}
+
+.filcontainer3{
+  text-align: center;
+}
+
+#applybutton{
+  margin: 5px 5px 5px 5px;
+}
+
+#shown{
+  font-size: 0.875em;
+  font-weight: lighter;
+}
+
+#filtout{
+  font-size: 0.875em;
+  font-weight: lighter;
+}
+
+tr, th, td {
+  padding: 15px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

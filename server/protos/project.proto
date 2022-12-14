@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package SmartScheduleProject;
+
+service ProjectService{
+  rpc getProject (ProjectRequest) returns (ProjectResponse) {}
+  rpc giveProject (ProjectInput) returns (ProjectResponse) {}
+}
+
+message ProjectRequest{
+  string daysToDeadline = 1;
+}
+
+
+message ProjectResponse{
+  repeated ProjectDetails project = 1;
+  int32 total = 2;
+  int32 provided = 3;
+}
+
+message ProjectDetails{
+  string projectID = 1;
+  string projectName = 2;
+  string clientName = 3;
+  string projectDeadline = 4;
+}
+
+message ProjectInput{
+  ProjectDetails project = 1;
+}
+
+message ProjectCreated{
+  string projectResult = 1;
+}

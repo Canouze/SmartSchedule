@@ -21,10 +21,10 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about/">Schedule</a>
+                <a class="nav-link" href="/schedule">Schedule</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact/">Projects</a>
+                <a class="nav-link" href="/project">Projects</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/employee">Employees</a>
@@ -32,37 +32,15 @@
               <li class="nav-item">
                 <a class="nav-link" href="/create-employee">Create Employee</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/create-project">Create Project</a>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
   </header>
   <div class="container-fluid">
-    <div id="inputdiv">
-      <div class="row">
-        <form action="/employee" method="get">
-          <div class="col-lg-2 filcontainer1" style="float:left">
-            <label for="id">Employee ID:</label><br>
-            <input type="text" id="id" name="id"><br>
-          </div>
-          <div class="col-lg-4 filcontainer1" style="float:left">
-            <label for="name">Employee Name:</label><br>
-            <input type="text" id="name" name="name">
-          </div>
-          <div class="col-lg-2 filcontainer1" style="float:left">
-            <label for="startdate">Start Date:</label><br>
-            <input type="startdate" id="startdate" name="startdate"><br>
-          </div>
-          <div class="col-lg-2 filcontainer1" style="float:left">
-            <label for="name">Employee Level:</label><br>
-            <input type="level" id="level" name="level">
-          </div>
-          <div class="col-lg-2 filcontainer3" style="float:left">
-            <button type="submit" action="/employee" method="get">Create Employee</button><br>
-          </div>
-        </form>
-      </div>
-    </div>
     <div id="filtdiv">
       <div class="row">
         <form action="/employee" method="get">
@@ -87,9 +65,9 @@
             }
           </script>
           <div class="col-lg-4 filcontainer3" style="float:left">
-            <b id="shown"><%= shown %></b><br>
-            <button type="submit" action="/employee" method="get">Apply Filters</button><br>
-            <b id="filtout"><%= filtout %></b>
+            <b id="shown">Employees Displayed: <%= shown %></b><br>
+            <button type="submit" id="applybutton" action="/employee" method="get">Apply Filters</button><br>
+            <b id="filtout">Employees Filtered Out: <%= filtout %></b>
           </div>
         </form>
       </div>
