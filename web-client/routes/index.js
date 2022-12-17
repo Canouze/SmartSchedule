@@ -18,8 +18,7 @@ var scheduleClient = new schedule_proto.ScheduleService('0.0.0.0:39237', grpc.cr
 let receivedlist = [];
 let preceivedlist=[];
 let showSchedule=[];
-let temps = [];
-let daylist = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+let tempSchedule = [];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -41,34 +40,51 @@ router.get('/schedule', function(req, res, next) {
     var sres = [];
     client.getEmployees({minDurationDays: 0, minLevel: 0}, function (error, response){
       eres = response.employee;
-      //console.log(eres);
       projectClient.getProject({daysToDeadline: 5000}, function (error, response){
         pres = response.project;
         scheduleClient.getSchedule(null, function(error, response){
           sres = response.schedule;
-          for(let j=0; j<eres.length; j++){
-            temps=[];
-            //console.log(1);
-            temps.push(eres[j].employeeName);
-            for(let g=0; g<daylist.length; g++){
-              //console.log(2);
-              for(let k=0; k<sres.length; k++){
-                //console.log(3);
-                if(eres[j].employeeName===sres[k].employeeName&&sres[k].scheduleDay===daylist[g]){
-                  temps.push(sres[k].projectName);
+          for(let i=0; i<eres.length; i++){
+            tempSchedule=[];
+            tempSchedule.push(eres[i].employeeName);
+            tempSchedule.push("Available");
+            tempSchedule.push("Available");
+            tempSchedule.push("Available");
+            tempSchedule.push("Available");
+            tempSchedule.push("Available");
+            showSchedule.push(tempSchedule);
+          }
+          showSchedule.push(tempSchedule);
+          for(let j=0; j<sres.length; j++){
+            let changer=0;
+            for(let k=0; k<showSchedule.length; k++){
+              if(showSchedule[k][0]===sres[j].employeeName){
+                if(sres[j].scheduleDay==="Monday"){
+                  changer=1;
                 }
-                else{
-                  temps.push("Available");
+                if(sres[j].scheduleDay==="Tuesday"){
+                  changer=2;
+                }
+                if(sres[j].scheduleDay==="Wednesday"){
+                  changer=3;
+                }
+                if(sres[j].scheduleDay==="Thursday"){
+                  changer=4;
+                }
+                if(sres[j].scheduleDay==="Friday"){
+                  changer=5;
                 }
               }
+              if(changer>0){
+                showSchedule[k][changer]=sres[j].projectName;
+              }
+              changer=0;
             }
-            showSchedule.push(temps);
           }
+          console.log(showSchedule);
           try{
-            res.render('schedule', {
+            res.render('Schedule', {
               title: 'Schedule',
-              pres: pres,
-              eres: eres,
               sres: showSchedule
             })
           }
@@ -84,38 +100,26 @@ router.get('/schedule', function(req, res, next) {
   }
 });
 
-router.get('/make-schedule', function(req, res, next) {
-  if(req.query.selectproject!=undefined)
+router.get('/create-schedule', function(req, res, next) {
+  if(req.query.selectproject!=undefined){
     try{
-      var initselectemp = req.query.selectemployee;
-      var initselectproj = req.query.selectproject;
-      var initselectday = req.query.selectday;
-      scheduleClient.giveSchedule({scheduleDay: initselectday, scheduleEmployee: initselectemp,scheduleProject: initselectproj}, function (error, response){
+      client.getEmployees({minDurationDays: 0, minLevel: 0}, function (error, response){
         eres = response.employee;
-        pres = response.project;
-        sres = response.schedule;
-        var eres = [];
-        var pres = [];
-        var sres = [];
-        showSchedule = [];
-        client.getEmployees({minDurationDays: 0, minLevel: 0}, function (error, response){
-          eres = response.employee;
-          projectClient.getProject({daysToDeadline: 5000}, function (error, response){
-            pres = response.project;
-            scheduleClient.getSchedule(null, function(error, response){
-              sres = response.schedule;
-              try{
-                res.render('schedule', {
-                  title: 'Schedule',
-                  pres: pres,
-                  eres: eres,
-                  sres: showSchedule
-                })
-              }
-              catch(e){
-                console.log(e);
-              }
-            })
+        projectClient.getProject({daysToDeadline: 5000}, function (error, response){
+          pres = response.project;
+          var initselectemp = req.query.selectemployee;
+          var initselectproj = req.query.selectproject;
+          var initselectday = req.query.selectday;
+          scheduleClient.giveSchedule({scheduleDay: initselectday, scheduleEmployee: initselectemp,scheduleProject: initselectproj}, function (error, response){
+            try{
+              res.render('create-schedule', {
+                title: 'Create Schedule',
+                result: response.scheduleResult
+              })
+            }
+            catch(e){
+              console.log(e);
+            }
           })
         })
       })
@@ -123,11 +127,18 @@ router.get('/make-schedule', function(req, res, next) {
     catch(e){
       console.log(e);
     }
+  }
   else{
     try{
-      res.render('create-employee', {
-        title: 'Create Employee',
-        result: 'Please enter details...'
+      client.getEmployees({minDurationDays: 0, minLevel: 0}, function (error, response){
+        eres = response.employee;
+        projectClient.getProject({daysToDeadline: 5000}, function (error, response){
+          pres = response.project;
+          res.render('create-schedule', {
+            title: 'Add Assignment',
+            result: 'Please enter details...'
+          })
+        })
       })
     }
     catch(e){

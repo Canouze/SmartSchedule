@@ -4,7 +4,7 @@ package SmartScheduleMain;
 
 service ScheduleService{
   rpc getSchedule (ScheduleRequest) returns (ScheduleResponse) {}
-  rpc giveSchedule (ScheduleInput) returns (ScheduleResponse) {}
+  rpc giveSchedule (ScheduleInput) returns (ScheduleCreated) {}
 }
 
 message ScheduleRequest{
@@ -25,4 +25,8 @@ message ScheduleInput{
   string scheduleDay = 1;
   string scheduleEmployee = 2;
   string scheduleProject = 3;
+}
+
+message ScheduleCreated{
+  string scheduleResult = 1;
 }

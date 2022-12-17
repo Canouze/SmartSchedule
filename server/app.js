@@ -176,8 +176,8 @@ function giveProject(call, callback){
 }
 
 function getSchedule(call, callback){
+  schedule_list=[];
   try{
-    schedule_list=[];
     con.query("SELECT * FROM schedule", function (err, result, fields) {
       if (err) throw err;
       for(let i=0; i<result.length; i++){
@@ -201,6 +201,7 @@ function getSchedule(call, callback){
 }
 
 function giveSchedule(call, callback){
+  schedule_list=[];
   try{
     var received_sday=call.request.scheduleDay;
     var received_empname=call.request.scheduleEmployee;
@@ -213,15 +214,14 @@ function giveSchedule(call, callback){
     con.query("SELECT * FROM schedule", function (err, result, fields) {
       if (err) throw err;
       for(let i=0; i<result.length; i++){
-        temp_schedule = {
+        temp_array = {
           scheduleID: result[i].schedule_id,
           scheduleDay: result[i].schedule_day,
           employeeName: result[i].employee_name,
           projectName: result[i].project_name,
         };
-        schedule_list.push(temp_schedule);
+        schedule_list.push(temp_array);
       }
-      console.log(schedule_list);
       callback(null, {schedule: schedule_list})
     })
   }

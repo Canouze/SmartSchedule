@@ -4,7 +4,7 @@ package SmartScheduleProject;
 
 service ProjectService{
   rpc getProject (ProjectRequest) returns (ProjectResponse) {}
-  rpc giveProject (ProjectInput) returns (ProjectResponse) {}
+  rpc giveProject (ProjectInput) returns (ProjectCreated) {}
 }
 
 message ProjectRequest{
