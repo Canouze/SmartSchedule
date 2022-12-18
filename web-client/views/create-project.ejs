@@ -43,40 +43,44 @@
         </div>
       </nav>
   </header>
+  <div class = "container-fluid" id="resultdiv2">
+    <p>
+      <% if (result!=null) { %>
+        <%= result %>
+      <% }
+      else { %>
+      <% } %>
+    </p>
+  </div>
   <div class="container-fluid">
     <div id="inputdiv">
       <div class="row">
         <form action="/create-project" method="get">
-          <div class="col-lg-2 filcontainer1" style="float:left">
+          <div class="col-lg-3 filcontainer1" style="float:left">
             <label for="id">Project ID:</label><br>
             <input type="text" id="projectid" name="projectid"><br>
           </div>
-          <div class="col-lg-4 filcontainer1" style="float:left">
+          <div class="col-lg-3 filcontainer1" style="float:left">
             <label for="name">Project Name:</label><br>
             <input type="text" id="projectname" name="projectname">
           </div>
-          <div class="col-lg-2 filcontainer1" style="float:left">
+          <div class="col-lg-3 filcontainer1" style="float:left">
             <label for="startdate">Client Name</label><br>
             <input type="startdate" id="clientname" name="clientname"><br>
           </div>
-          <div class="col-lg-2 filcontainer1" style="float:left">
+          <div class="col-lg-3 filcontainer1" style="float:left">
             <label for="name">Deadline</label><br>
             <input type="level" id="projectdeadline" name="projectdeadline">
           </div>
-          <div class="col-lg-2 filcontainer3" style="float:left">
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="buttondiv">
             <button type="submit" action="/create-project" method="get">Create Project</button><br>
           </div>
         </form>
       </div>
-    </div>
-    <div>
-      <p>
-        <% if (result!=null) { %>
-          <%= result %>
-        <% }
-        else { %>
-        <% } %>
-      </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>

@@ -68,3 +68,26 @@ tr, th, td {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+#titlediv{
+  text-align: center;
+  padding: 100px;
+}
+
+#resultdiv1{
+  text-align: center;
+  padding: 25px;
+}
+#resultdiv2{
+  text-align: center;
+  padding: 25px;
+}
+
+#resultdiv3{
+  text-align: center;
+  padding: 25px;
+}
+
+.buttondiv{
+  text-align: center;
+}

@@ -54,7 +54,6 @@ router.get('/schedule', function(req, res, next) {
             tempSchedule.push("Available");
             showSchedule.push(tempSchedule);
           }
-          showSchedule.push(tempSchedule);
           for(let j=0; j<sres.length; j++){
             let changer=0;
             for(let k=0; k<showSchedule.length; k++){
@@ -238,6 +237,7 @@ router.get('/create-project', function(req, res, next) {
       var initclient = req.query.clientname;
       var initdeadline = req.query.projectdeadline;
       projectClient.giveProject({project: {projectID: initid, projectName: initname, clientName: initclient, projectDeadline: initdeadline}}, function (error, response){
+        console.log(response.projectResult);
         try{
           res.render('create-project', {
             title: 'Create Project',

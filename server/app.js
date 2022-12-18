@@ -163,7 +163,7 @@ function giveProject(call, callback){
       if (err) throw err;
       console.log("Project record created successfully");
       callback(null, {
-        employeeResult: "Project Created Successfully."
+        projectResult: "Project Created Successfully."
       })
     });
   }
@@ -181,6 +181,7 @@ function getSchedule(call, callback){
     con.query("SELECT * FROM schedule", function (err, result, fields) {
       if (err) throw err;
       for(let i=0; i<result.length; i++){
+        temp_schedule=[];
         temp_schedule = {
           scheduleID: result[i].schedule_id,
           scheduleDay: result[i].schedule_day,
@@ -222,7 +223,9 @@ function giveSchedule(call, callback){
         };
         schedule_list.push(temp_array);
       }
-      callback(null, {schedule: schedule_list})
+      callback(null,
+        {scheduleResult: "Assignment Added Successfully."
+      })
     })
   }
   catch(e){
