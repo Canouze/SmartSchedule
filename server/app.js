@@ -249,6 +249,6 @@ server.addService(schedule_proto.ScheduleService.service, {
   giveSchedule: giveSchedule
 });
 
-server.bindAsync("54.217.7.41:39237", grpc.ServerCredentials.createInsecure(), function() {
+server.bindAsync("0.0.0.0:39237", grpc.ServerCredentials.createInsecure(), function() {
   server.start()
 })
