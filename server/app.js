@@ -90,7 +90,6 @@ function getEmployees(call, callback){
 
 function giveEmployee(call, callback){
   try{
-    console.log(call.request.employee.employeeID);
     var received_id=call.request.employee.employeeID;
     var received_name=call.request.employee.employeeName;
     var received_startdate=call.request.employee.employeeStartDate;

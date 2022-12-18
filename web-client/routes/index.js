@@ -11,9 +11,9 @@ var packageDefinition3 = protoLoader.loadSync(PROTO_PATH_3);
 var employee_proto = grpc.loadPackageDefinition(packageDefinition1).SmartSchedule;
 var project_proto = grpc.loadPackageDefinition(packageDefinition2).SmartScheduleProject;
 var schedule_proto = grpc.loadPackageDefinition(packageDefinition3).SmartScheduleMain;
-var client = new employee_proto.EmployeeService('0.0.0.0:39237', grpc.credentials.createInsecure());
-var projectClient = new project_proto.ProjectService('0.0.0.0:39237', grpc.credentials.createInsecure());
-var scheduleClient = new schedule_proto.ScheduleService('0.0.0.0:39237', grpc.credentials.createInsecure());
+var client = new employee_proto.EmployeeService('54.217.7.41:39237', grpc.credentials.createInsecure());
+var projectClient = new project_proto.ProjectService('54.217.7.41:39237', grpc.credentials.createInsecure());
+var scheduleClient = new schedule_proto.ScheduleService('54.217.7.41:39237', grpc.credentials.createInsecure());
 
 let receivedlist = [];
 let preceivedlist=[];
@@ -80,7 +80,6 @@ router.get('/schedule', function(req, res, next) {
               changer=0;
             }
           }
-          console.log(showSchedule);
           try{
             res.render('Schedule', {
               title: 'Schedule',
@@ -196,7 +195,6 @@ router.get('/project', function(req, res, next) {
 router.get('/create-employee', function(req, res, next) {
   if(req.query.id!=undefined)
     try{
-      console.log(req.query.id);
       var initid = req.query.id;
       var initname = req.query.name;
       var initstartdate = req.query.startdate;
@@ -237,7 +235,6 @@ router.get('/create-project', function(req, res, next) {
       var initclient = req.query.clientname;
       var initdeadline = req.query.projectdeadline;
       projectClient.giveProject({project: {projectID: initid, projectName: initname, clientName: initclient, projectDeadline: initdeadline}}, function (error, response){
-        console.log(response.projectResult);
         try{
           res.render('create-project', {
             title: 'Create Project',
