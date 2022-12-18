@@ -12,7 +12,6 @@ message EmployeeRequest{
   string minLevel = 2;
 }
 
-
 message EmployeeResponse{
   repeated EmployeeDetails employee = 1;
   int32 total = 2;
